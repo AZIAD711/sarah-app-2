@@ -7,5 +7,5 @@ const PORT = process.env.SERVER_PORT ;
 
 app().listen(PORT, () => {
     console.log("✅ STATUS IN SERVER : PASSED ")
-    console.log(`✅ Server is running on port ${PORT}`);
+    console.log(`✅ SERVER IS RUNNING ON PORT : ${PORT}`);
 });

@@ -10,33 +10,33 @@ const messageSchema = new Schema(
       type: Types.ObjectId,
       trim: true,
       required: true,
-      ref:"User"
+      ref: "User"
     },
     // reciver id  
-    reciverId : {
+    reciverId: {
       type: Types.ObjectId,
       trim: true,
       required: true,
-      ref:"User"
+      ref: "User"
     },
     // BODY
-    body:{
-        type:String,
-        trim : true,
-        maxlength : 1000,
-        required: true,
+    body: {
+      type: String,
+      trim: true,
+      maxlength: 1000,
+      required: true,
     },
     // parent_id 
-    parentId:{
+    parentId: {
       type: Types.ObjectId,
-      ref:"Message",
-      default:null
-    } ,
+      ref: "Message",
+      default: null
+    },
     // FLAG 
-    flag : {
-        type : String,
-        enum : Object.values(MessageFlag),
-        defualt : MessageFlag.SENT
+    flag: {
+      type: String,
+      enum: Object.values(MessageFlag),
+      defualt: MessageFlag.SENT
     }
   },
   {
@@ -44,6 +44,7 @@ const messageSchema = new Schema(
     strictQuery: true,
     timestamps: true,
     collection: "message_data",
+    versionKey: "version",
   }
 );
 

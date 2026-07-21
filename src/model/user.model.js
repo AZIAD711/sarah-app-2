@@ -86,10 +86,10 @@ const userSchema = new Schema(
       default: null,
     },
     // ROLE 
-    role : {
-      type : String ,
-      enum : Object.values(UserRole),
-      default : UserRole.USER
+    role: {
+      type: String,
+      enum: Object.values(UserRole),
+      default: UserRole.USER
     }
   },
   {
@@ -99,6 +99,7 @@ const userSchema = new Schema(
     collection: "user_data",
     toJSON: { getters: true, virtuals: true },
     toObject: { getters: true, virtuals: true },
+    versionKey: "version",
   }
 );
 
