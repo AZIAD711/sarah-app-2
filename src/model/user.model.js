@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import { Gender } from "../common/enum/gender.js";
 import { UserRole } from "../common/enum/user-role.js";
+import { SystemProvider } from "../common/enum/system-provider.js";
 
 const noData = "No data provided!";
 
@@ -90,6 +91,12 @@ const userSchema = new Schema(
       type: String,
       enum: Object.values(UserRole),
       default: UserRole.USER
+    },
+    // PROVIDER 
+    provider : {
+      type : String,
+      enum : Object.values(SystemProvider),
+      default : SystemProvider.OWN
     }
   },
   {
