@@ -1,0 +1,45 @@
+Sarah App
+
+
+USER MODEL 
+fname (✅)
+lname (✅)
+username -- unique (✅)
+email (✅)
+password (✅)
+address (✅)
+gender (✅)
+phone (✅)
+age (✅)
+confirmEmail => flag  (✅)
+profile image (✅)
+
+USER APIS
+profile (⚠️)
+update profile  (⚠️)  
+signup   (⚠️)
+login (⚠️)
+login with gmail  (⚠️)
+forget password  (⚠️)
+rest password  (⚠️)
+create link  => id (⚠️)
+
+
+MESSAGE MODEL 
+sender_id (✅)
+reciver id (✅)
+body  => txt image 1000(✅)
+parent_id =>(✅)
+flag (✅)
+
+MESSAGE APIS 
+send (⚠️)
+deleted  (⚠️)
+get my messages  (⚠️)
+reply (⚠️)
+request (⚠️)
+
+scalib
+security 
+avail
+validation

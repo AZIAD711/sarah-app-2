@@ -68,3 +68,15 @@ export const invalidTokenResponse = ({
         statusCode:400
     });
 };
+// EMAIL IS ALREADY EXIST RESPONSE
+export const emailAlreadyExistResponse = ({
+    response,
+    message = "Email is Already Exist",
+
+}) => {
+    return failResponse({
+        response,
+        message,
+        statusCode:400
+    });
+};

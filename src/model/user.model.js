@@ -84,7 +84,7 @@ const userSchema = new Schema(
     // PROFILE IMAGE
     profileImage: {
       type: String,
-      default: null,
+      default: noData,
     },
     // ROLE 
     role: {
