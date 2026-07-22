@@ -44,7 +44,7 @@ export const badRequestResponse = ({
         statusCode:400
     });
 };
-// BAD REQUEST RESPONSE
+// INTERNAL SERVER RESPONSE
 export const internalServerResponse = ({
     response,
     message = "internal server",
@@ -54,5 +54,17 @@ export const internalServerResponse = ({
         response,
         message,
         statusCode:500
+    });
+};
+// INVALID TOKEN RESPONSE
+export const invalidTokenResponse = ({
+    response,
+    message = "Invalid Token",
+
+}) => {
+    return failResponse({
+        response,
+        message,
+        statusCode:400
     });
 };
