@@ -1,4 +1,4 @@
-import {signupService,loginService} from "./auth.service.js"
+import {signupService,loginService,getProfileService} from "./auth.service.js"
 import {internalServerResponse} from "../../common/response/error.js"
 import {createdDataResponse,dataDeletedResponse,dataFoundResponse,dataUpdatedResponse} from "../../common/response/sccuess.js"
 // SIGN UP 
@@ -31,7 +31,24 @@ return createdDataResponse({
     message : "User"
 })
 } catch (error) {
-    console.log("❌ ERROR IN SIGN UP CONTROLLER : ",error)
+    console.log("❌ ERROR IN LOGIN CONTROLLER : ",error)
+    return internalServerResponse({
+        response : response ,
+        message : error.message
+    })
+}
+}
+// GET PROFILE 
+export const getProfileController = async (request,response)=>{
+try {
+const userData = await getProfileService(request.user._id)
+return dataFoundResponse({
+    response : response,
+    data : userData,
+    message : "User"
+})
+} catch (error) {
+    console.log("❌ ERROR IN GET PROFILE CONTROLLER : ",error)
     return internalServerResponse({
         response : response ,
         message : error.message

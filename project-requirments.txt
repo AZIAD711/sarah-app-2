@@ -15,7 +15,7 @@ confirmEmail => flag  (✅)
 profile image (✅)
 
 USER APIS
-profile (⚠️)
+profile (✅)
 update profile  (⚠️)  
 signup   (✅)
 login (✅)
