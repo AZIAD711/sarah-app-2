@@ -21,7 +21,7 @@ signup   (✅)
 login (✅)
 login with gmail  (⚠️)
 forget password  (⚠️)
-rest password  (⚠️)
+rest password  (✅)
 create link  => id (⚠️)
 
 

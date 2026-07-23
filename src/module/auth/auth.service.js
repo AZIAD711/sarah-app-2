@@ -87,3 +87,28 @@ export const updateProfileService = async (userId, data) => {
         },
     });
 };
+// RESET PASSWORD 
+export const resetPasswordService = async (email,password)=>{
+    const user = await selectOne({
+        databaseType: "mongoDB",
+        model: UserModel,
+        whereClause: {
+            email: email
+        }
+    })
+    if (!user) {
+        throw new Error("Email Dosent't Exist !")
+    }
+    const newPassword = await updateOneRecord({
+        databaseType: "mongoDB",
+        model: UserModel,
+        value : {
+            password : password
+        },
+        whereClause: {
+            email: email,
+        },
+    });
+    return newPassword
+    
+}
