@@ -1,6 +1,7 @@
 import {signupService,loginService,getProfileService} from "./auth.service.js"
 import {internalServerResponse} from "../../common/response/error.js"
 import {createdDataResponse,dataDeletedResponse,dataFoundResponse,dataUpdatedResponse} from "../../common/response/sccuess.js"
+import Joi from "joi"
 // SIGN UP 
 export const signupController = async (request,response)=>{
 try {
@@ -38,6 +39,7 @@ return createdDataResponse({
     })
 }
 }
+
 // GET PROFILE 
 export const getProfileController = async (request,response)=>{
 try {
