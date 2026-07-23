@@ -16,7 +16,7 @@ profile image (✅)
 
 USER APIS
 profile (✅)
-update profile  (⚠️)  
+update profile  (✅)  
 signup   (✅)
 login (✅)
 login with gmail  (⚠️)

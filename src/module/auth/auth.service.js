@@ -1,7 +1,8 @@
 import { selectMany, selectOne } from "../../common/repo/select.js"
+import { updateOneRecord } from "../../common/repo/update.js"
 import { addManyRecords, addOneRecord } from "../../common/repo/add.js"
 import UserModel from "../../model/user.model.js";
-import { generateToken, loginCredentials ,decodeToken,verifyToken} from "../../common/token/token.js"
+import { generateToken, loginCredentials, decodeToken, verifyToken } from "../../common/token/token.js"
 // SIGN UP 
 export const signupService = async (data) => {
     const isExist = await selectOne({
@@ -74,4 +75,15 @@ export const getProfileService = async (userId) => {
     }
 
     return user;
+};
+// UPDATE PROFILE 
+export const updateProfileService = async (userId, data) => {
+    return await updateOneRecord({
+        databaseType: "mongoDB",
+        model: UserModel,
+        value : data,
+        whereClause: {
+            _id: userId,
+        },
+    });
 };

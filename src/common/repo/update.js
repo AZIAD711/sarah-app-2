@@ -28,7 +28,7 @@ export const updatePassword = async ({
 };
 
 // UPDATE ONE COLUMN
-export const updateColumn = async ({
+export const updateOneRecord = async ({
     databaseType = "mongoDB",
     model,
     columnName,
@@ -50,12 +50,13 @@ export const updateColumn = async ({
 
         // MONGODB DATABASE
         case "mongoDB":
-            return await model.updateOne(
+            return await model.findOneAndUpdate(
                 whereClause,
                 {
-                    $set: {
-                        [columnName]: value,
-                    },
+                    $set: value
+                },
+                {
+                    new: true
                 }
             );
 
@@ -65,7 +66,7 @@ export const updateColumn = async ({
 };
 
 // UPDATE MANY COLUMNS
-export const updateColumns = async ({
+export const updateManyRecord = async ({
     databaseType = "mongoDB",
     model,
     columns,
@@ -81,7 +82,7 @@ export const updateColumns = async ({
 
         // MONGODB DATABASE
         case "mongoDB":
-            return await model.updateOne(
+            return await model.updateMany(
                 whereClause,
                 {
                     $set: columns,
