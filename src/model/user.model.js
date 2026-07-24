@@ -39,7 +39,7 @@ const userSchema = new Schema(
     password: {
       type: String,
       minlength: 6,
-      maxlength: 100,
+      maxlength: 6,
       trim: true,
       required: true,
       get() {
