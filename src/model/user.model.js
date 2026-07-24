@@ -71,7 +71,7 @@ const userSchema = new Schema(
     // AGE
     age: {
       type: Number,
-      min: 1,
+      min: 18,
       max: 120,
     },
 
