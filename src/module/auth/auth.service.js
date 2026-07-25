@@ -112,3 +112,9 @@ export const resetPasswordService = async (email,password)=>{
     return newPassword
     
 }
+// LOGOUT 
+export const logoutService = async(user)=>{
+    user.changeCredintals= new Date()
+    await user.save()
+    return user
+}

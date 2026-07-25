@@ -1,9 +1,10 @@
 import { request, response } from "express"
 import { decodeToken, verifyToken } from "../token/token.js"
-import { authorizedResponse, invalidTokenResponse} from "../response/error.js"
+import { authorizedResponse, invalidTokenResponse } from "../response/error.js"
+import UserModel from "../../model/user.model.js"
 // AUTHENCATION MIDDELWARE FUNCTION 
 export const authentication = () => {
-    return (request, response, next) => {
+    return async (request, response, next) => {
         try {
             const authorization = request.headers.authorization;
 
@@ -28,15 +29,26 @@ export const authentication = () => {
                 process.env.USER_ACCESS_SECRET
             );
 
-            request.user = decoded;
-            console.log(decoded)
+            const user = await UserModel.findById(decoded._id);
+
+            if (!user) {
+                throw new Error("User not found.");
+            }
+
+            request.user = user;      
             request.token = token;
-            console.log(token)
+
+            if (
+                user.changeCredintals &&
+                user.changeCredintals.getTime() >= decoded.iat * 1000
+            ) {
+                throw new Error("Token has been already expired!");
+            }
 
             next();
 
         } catch (error) {
-            console.log(error)
+            console.log(error);
             return invalidTokenResponse({
                 response,
                 message: error.message

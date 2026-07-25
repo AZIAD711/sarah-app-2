@@ -1,4 +1,4 @@
-import { signupService, loginService, getProfileService, updateProfileService, resetPasswordService } from "./auth.service.js"
+import { signupService, loginService, getProfileService, updateProfileService, resetPasswordService,logoutService } from "./auth.service.js"
 import { internalServerResponse } from "../../common/response/error.js"
 import { createdDataResponse, dataDeletedResponse, dataFoundResponse, dataUpdatedResponse } from "../../common/response/sccuess.js"
 import Joi from "joi"
@@ -86,6 +86,23 @@ export const resetPasswordController = async (request, response) => {
             response: response,
             data: userData,
             message: "Password"
+        })
+    } catch (error) {
+        console.log("❌ ERROR IN RESET PASSWORD CONTROLLER : ", error)
+        return internalServerResponse({
+            response: response,
+            message: error.message
+        })
+    }
+}
+// LOGOUT 
+export const logoutController = async (request, response) => {
+    try {
+        const userData = await logoutService(request.user)
+        return createdDataResponse({
+            response: response,
+            data: userData,
+            message: "Token Expired !"
         })
     } catch (error) {
         console.log("❌ ERROR IN RESET PASSWORD CONTROLLER : ", error)
