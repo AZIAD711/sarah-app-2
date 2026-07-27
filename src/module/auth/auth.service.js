@@ -2,6 +2,7 @@ import { selectMany, selectOne } from "../../common/repo/select.js"
 import { updateOneRecord } from "../../common/repo/update.js"
 import { addManyRecords, addOneRecord } from "../../common/repo/add.js"
 import UserModel from "../../model/user.model.js";
+import TokenModel from "../../model/token.model.js";
 import { generateToken, loginCredentials, decodeToken, verifyToken } from "../../common/token/token.js"
 // SIGN UP 
 export const signupService = async (data) => {
@@ -113,8 +114,20 @@ export const resetPasswordService = async (email,password)=>{
     
 }
 // LOGOUT 
-export const logoutService = async(user)=>{
+export const logoutService = async(body,user,decoded)=>{
+    if(body?.flag === "all"){
     user.changeCredintals= new Date()
     await user.save()
-    return user
+    await TokenModel.deleteMany({
+        userId : user._id
+    })
+    return
+    }
+    else{
+        await TokenModel.create({
+            userId : user._id,
+            expireIn : new Date(decoded.exp * 60 * 1000),
+            jti : decoded.jti
+        })
+    }
 }

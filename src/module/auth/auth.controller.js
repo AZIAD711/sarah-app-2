@@ -98,14 +98,14 @@ export const resetPasswordController = async (request, response) => {
 // LOGOUT 
 export const logoutController = async (request, response) => {
     try {
-        const userData = await logoutService(request.user)
+        const userData = await logoutService(request.body,request.user,request.decoded)
         return createdDataResponse({
             response: response,
             data: userData,
             message: "Token Expired !"
         })
     } catch (error) {
-        console.log("❌ ERROR IN RESET PASSWORD CONTROLLER : ", error)
+        console.log("❌ ERROR IN LOGOUT CONTROLLER : ", error)
         return internalServerResponse({
             response: response,
             message: error.message

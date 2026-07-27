@@ -13,7 +13,7 @@ const tokenSchema = new Schema(
             ref: "User"
         },
         // JTI 
-        jit: {
+        jti: {
             type: String,
             trim: true,
             required: true,
