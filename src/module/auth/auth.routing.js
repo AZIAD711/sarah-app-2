@@ -1,4 +1,5 @@
-import {signupController,loginController,getProfileController,updateProfileController,resetPasswordController,logoutController} from "./auth.controller.js"
+import {signupController,loginController,getProfileController,updateProfileController,resetPasswordController,logoutController,forgetPasswordController} from "./auth.controller.js"
+
 import {authentication,authorization} from "../../common/middleware/auth.middleware.js"
 import express from "express"
 import { UserRole } from "../../common/enum/user-role.js"
@@ -7,6 +8,7 @@ import { schemaValidate } from "../../common/middleware/valdiate.middelware.js"
 const userRouter = express.Router()
 userRouter.post("/signup",schemaValidate(signupSchema),signupController)
 userRouter.post("/reset/password",schemaValidate(resetPasswordSchema),resetPasswordController)
+userRouter.post("/forget/password",forgetPasswordController)
 userRouter.post("/login",schemaValidate(loginSchema),loginController)
 userRouter.post("/logout",authentication(),authorization(UserRole.USER),logoutController)
 userRouter.get("/profile",authentication(),authorization(UserRole.USER),getProfileController)

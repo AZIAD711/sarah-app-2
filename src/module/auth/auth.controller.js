@@ -1,4 +1,4 @@
-import { signupService, loginService, getProfileService, updateProfileService, resetPasswordService,logoutService } from "./auth.service.js"
+import { signupService, loginService, getProfileService, updateProfileService, resetPasswordService,logoutService, forgetPasswordService } from "./auth.service.js"
 import { internalServerResponse } from "../../common/response/error.js"
 import { createdDataResponse, dataDeletedResponse, dataFoundResponse, dataUpdatedResponse } from "../../common/response/sccuess.js"
 import Joi from "joi"
@@ -106,6 +106,24 @@ export const logoutController = async (request, response) => {
         })
     } catch (error) {
         console.log("❌ ERROR IN LOGOUT CONTROLLER : ", error)
+        return internalServerResponse({
+            response: response,
+            message: error.message
+        })
+    }
+}
+// FORGET PASSWORD 
+export const forgetPasswordController = async (request, response) => {
+    try {
+        const email = request.body.email;
+        const userData = await forgetPasswordService(email)
+        return dataFoundResponse({
+            response: response,
+            data: userData,
+            message: "Email"
+        })
+    } catch (error) {
+        console.log("❌ ERROR IN RESET PASSWORD CONTROLLER : ", error)
         return internalServerResponse({
             response: response,
             message: error.message
