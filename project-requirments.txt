@@ -20,7 +20,7 @@ update profile  (✅)
 signup   (✅)
 login (✅)
 login with gmail  (⚠️)
-forget password  (⚠️)
+forget password  (✅)
 rest password  (✅)
 create link  => id (⚠️)
 
@@ -33,7 +33,7 @@ parent_id =>(✅)
 flag (✅)
 
 MESSAGE APIS 
-send (⚠️)
+send (✅)
 deleted  (⚠️)
 get my messages  (⚠️)
 reply (⚠️)
