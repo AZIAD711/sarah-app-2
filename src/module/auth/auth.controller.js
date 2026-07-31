@@ -80,12 +80,13 @@ export const updateProfileController = async (request, response) => {
 export const resetPasswordController = async (request, response) => {
     try {
         const email = request.body.email;
-        const password = request.body.password;
-        const userData = await resetPasswordService(email, password)
+        const password = request.body.newPassword;
+        const otp = request.body.otp
+        const userData = await resetPasswordService(email, password,otp)
         return dataUpdatedResponse({
             response: response,
+            message: "Password",
             data: userData,
-            message: "Password"
         })
     } catch (error) {
         console.log("❌ ERROR IN RESET PASSWORD CONTROLLER : ", error)

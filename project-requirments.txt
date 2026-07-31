@@ -36,7 +36,7 @@ MESSAGE APIS
 send (✅)
 deleted  (✅)
 get my messages  (✅)
-reply (⚠️)
+reply (✅)
 request (⚠️)
 
 scalib

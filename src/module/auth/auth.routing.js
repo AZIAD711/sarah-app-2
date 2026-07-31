@@ -7,7 +7,7 @@ import { loginSchema ,resetPasswordSchema,signupSchema } from "./auth.valdition.
 import { schemaValidate } from "../../common/middleware/valdiate.middelware.js"
 const userRouter = express.Router()
 userRouter.post("/signup",schemaValidate(signupSchema),signupController)
-userRouter.post("/reset/password",schemaValidate(resetPasswordSchema),resetPasswordController)
+userRouter.post("/reset/password",resetPasswordController)
 userRouter.post("/forget/password",forgetPasswordController)
 userRouter.post("/login",schemaValidate(loginSchema),loginController)
 userRouter.post("/logout",authentication(),authorization(UserRole.USER),logoutController)

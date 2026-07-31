@@ -105,7 +105,9 @@ export const forgetPasswordService = async (email) => {
         throw new Error("Email Is Not Exist !")
     }
     const otp = generateOTP()
-    const addOtp = await setRecord(otpTemplateWtihEmail(email), otp, 60)
+    const addOtp = await setRecord(otpTemplateWtihEmail(email), otp, 4*60)
+    // const getOtp = await getRecord(otpTemplateWtihEmail(email))
+    // console.log(getOtp)
     const emailSend = await sendEmail({
         toValue: email,
         subjectValue: "Reset Password",
@@ -113,7 +115,7 @@ export const forgetPasswordService = async (email) => {
     })
 }
 // RESET PASSWORD 
-export const resetPasswordService = async (email, password) => {
+export const resetPasswordService = async (email, password, otp) => {
     const user = await selectOne({
         databaseType: "mongoDB",
         model: UserModel,
@@ -124,6 +126,11 @@ export const resetPasswordService = async (email, password) => {
     if (!user) {
         throw new Error("Email Dosent't Exist !")
     }
+    const getOtp = await getRecord(otpTemplateWtihEmail(email))
+if (String(getOtp) !== String(otp)) {
+    throw new Error("INVALID OTP!");
+}
+    console.log(getOtp)
     const newPassword = await updateOneRecord({
         databaseType: "mongoDB",
         model: UserModel,
