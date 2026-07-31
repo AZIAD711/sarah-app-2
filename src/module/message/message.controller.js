@@ -1,4 +1,4 @@
-import { deleteMessageByAdminService, deleteMessageService, getMyMessagesService, listAllMessagesService, sendMessageService } from "./message.service.js"
+import { deleteMessageByAdminService, deleteMessageService, getMyMessagesService, listAllMessagesService, replyMessageService, sendMessageService } from "./message.service.js"
 import { createdDataResponse, dataDeletedResponse, dataFoundResponse, dataUpdatedResponse } from "../../common/response/sccuess.js"
 import { internalServerResponse } from "../../common/response/error.js"
 // SEND MESSAGE 
@@ -32,7 +32,7 @@ export const getMyMessagesController = async (request, response) => {
         return dataFoundResponse({
             response: response,
             message: "Messages",
-            data : messageData
+            data: messageData
         })
     } catch (error) {
         console.log("❌ ERROR IN MESSAGE CONTROLLER : ", error)
@@ -49,7 +49,7 @@ export const listAllMessagesController = async (request, response) => {
         return dataFoundResponse({
             response: response,
             message: "Messages",
-            data : messageData
+            data: messageData
         })
     } catch (error) {
         console.log("❌ ERROR IN MESSAGE CONTROLLER : ", error)
@@ -64,11 +64,11 @@ export const deleteMessageController = async (request, response) => {
     try {
         const messageId = request.params.messageId;
         const reciverId = request.user._id
-        const messageData = await deleteMessageService({messageId : messageId , reciverId : reciverId});
+        const messageData = await deleteMessageService({ messageId: messageId, reciverId: reciverId });
         return dataDeletedResponse({
             response: response,
             message: "Message",
-            data : messageData
+            data: messageData
         })
     } catch (error) {
         console.log("❌ ERROR IN MESSAGE CONTROLLER : ", error)
@@ -82,11 +82,31 @@ export const deleteMessageController = async (request, response) => {
 export const deleteMessageByAdminController = async (request, response) => {
     try {
         const messageId = request.params.messageId;
-        const messageData = await deleteMessageByAdminService({messageId : messageId});
+        const messageData = await deleteMessageByAdminService({ messageId: messageId });
         return dataDeletedResponse({
             response: response,
             message: "Message",
-            data : messageData
+            data: messageData
+        })
+    } catch (error) {
+        console.log("❌ ERROR IN MESSAGE CONTROLLER : ", error)
+        return internalServerResponse({
+            response: response,
+            message: error.message
+        })
+    }
+}
+// REPLY MESSAGE
+export const replyMessageController = async (request, response) => {
+    try {
+        const messageId = request.params.messageId;
+        const senderId = request.user._id;
+        const message = request.body.message;
+        const messageData = await replyMessageService({ messageId: messageId, senderId: senderId, content: message });
+        return createdDataResponse({
+            response: response,
+            message: "Message",
+            data: messageData
         })
     } catch (error) {
         console.log("❌ ERROR IN MESSAGE CONTROLLER : ", error)

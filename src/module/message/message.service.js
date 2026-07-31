@@ -60,3 +60,22 @@ export const deleteMessageByAdminService = async (messageId)=>{
 
     return message;
 }
+// REPLY MESSAGE 
+export const replyMessageService = async({ messageId, senderId, content })=>{
+    const message = await MessageModel.findById(messageId)
+    if(!message){
+        throw new Error("MESSAGE NOT FOUND !")
+    }
+    if(message.reciverId.toString() !== senderId.toString()){
+        throw new Error("YOU DON'T HAVE ACCESS TO THIS MESSAGE !")
+    }
+    if(!senderId){
+        throw new Error("CANNOT REPLY TO ANONYMOUS MESSAGE !")
+    }
+    const replyMessage= await MessageModel.create({
+        body: content,
+        senderId: senderId || undefined,
+        reciverId: message.reciverId
+    })
+    return replyMessage
+}
