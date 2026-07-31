@@ -14,7 +14,7 @@ export const deleteRecord = async ({
 
         // MONGODB DATABASE
         case "mongoDB":
-            return await model.deleteOne(whereClause);
+            return await model.findOneAndDelete(whereClause);
 
         default:
             throw new Error("Unsupported database type");
