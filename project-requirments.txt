@@ -34,7 +34,7 @@ flag (✅)
 
 MESSAGE APIS 
 send (✅)
-deleted  (⚠️)
+deleted  (✅)
 get my messages  (✅)
 reply (⚠️)
 request (⚠️)
