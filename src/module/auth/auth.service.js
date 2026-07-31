@@ -7,6 +7,7 @@ import { sendEmail } from "../../common/utils/mail.js"
 import { generateToken, loginCredentials, decodeToken, verifyToken } from "../../common/token/token.js"
 import { generateOTP } from "../../common/utils/generate-otp.js";
 import { deleteRecord, exsitRecord, flushAllRecords, getRecord, mGetRecords, otpTemplateWtihEmail, setRecord } from "../../common/utils/redis.js"
+import { StatusAccount } from "../../common/enum/status-account.js";
 // SIGN UP 
 export const signupService = async (data) => {
     const isExist = await selectOne({
@@ -31,9 +32,12 @@ export const loginService = async (email, password) => {
         databaseType: "mongoDB",
         model: UserModel,
         whereClause: {
-            email: email
+            email: email,
         }
     })
+    if(user.statusAccount !== StatusAccount.ACTIVE ){
+        throw new Error("YOUR ACCOUNT IS BLOCKED !")
+    }
     if (!user) {
         throw new Error("Email Dosent't Exist !")
     }
@@ -105,7 +109,7 @@ export const forgetPasswordService = async (email) => {
         throw new Error("Email Is Not Exist !")
     }
     const otp = generateOTP()
-    const addOtp = await setRecord(otpTemplateWtihEmail(email), otp, 4*60)
+    const addOtp = await setRecord(otpTemplateWtihEmail(email), otp, 4 * 60)
     // const getOtp = await getRecord(otpTemplateWtihEmail(email))
     // console.log(getOtp)
     const emailSend = await sendEmail({
@@ -127,9 +131,9 @@ export const resetPasswordService = async (email, password, otp) => {
         throw new Error("Email Dosent't Exist !")
     }
     const getOtp = await getRecord(otpTemplateWtihEmail(email))
-if (String(getOtp) !== String(otp)) {
-    throw new Error("INVALID OTP!");
-}
+    if (String(getOtp) !== String(otp)) {
+        throw new Error("INVALID OTP!");
+    }
     console.log(getOtp)
     const newPassword = await updateOneRecord({
         databaseType: "mongoDB",
@@ -161,4 +165,18 @@ export const logoutService = async (body, user, decoded) => {
             jti: decoded.jti
         })
     }
+}
+// SET STATUS ACCOUNT
+export const setStatusAccountByAdminService=async(statusAccount,userId)=>{
+    const status = await updateOneRecord({
+        databaseType: "mongoDB",
+        model: UserModel,
+        value: {
+            statusAccount: statusAccount
+        },
+        whereClause: {
+            _id: userId,
+        },
+    });
+    return status
 }

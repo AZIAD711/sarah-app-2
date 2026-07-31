@@ -1,4 +1,4 @@
-import { signupService, loginService, getProfileService, updateProfileService, resetPasswordService,logoutService, forgetPasswordService } from "./auth.service.js"
+import { signupService, loginService, getProfileService, updateProfileService, resetPasswordService,logoutService, forgetPasswordService, setStatusAccountByAdminService } from "./auth.service.js"
 import { internalServerResponse } from "../../common/response/error.js"
 import { createdDataResponse, dataDeletedResponse, dataFoundResponse, dataUpdatedResponse } from "../../common/response/sccuess.js"
 import Joi from "joi"
@@ -122,6 +122,25 @@ export const forgetPasswordController = async (request, response) => {
             response: response,
             data: userData,
             message: "Email"
+        })
+    } catch (error) {
+        console.log("❌ ERROR IN RESET PASSWORD CONTROLLER : ", error)
+        return internalServerResponse({
+            response: response,
+            message: error.message
+        })
+    }
+}
+// STATUS ACCOUNT
+export const setStatusAccountByAdminController = async (request, response) => {
+    try {
+        const statusAccount = request.body.statusAccount;
+        const userId = request.params.userId;
+        const userData = await setStatusAccountByAdminService(statusAccount,userId)
+        return dataUpdatedResponse({
+            response: response,
+            data: userData,
+            message: "Status Account of User"
         })
     } catch (error) {
         console.log("❌ ERROR IN RESET PASSWORD CONTROLLER : ", error)

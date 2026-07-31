@@ -104,7 +104,8 @@ const userSchema = new Schema(
     // STATUS ACCOUNT 
     statusAccount : {
       type : String,
-      enum: Object.values(StatusAccount)
+      enum: Object.values(StatusAccount),
+      default : StatusAccount.ACTIVE
     }
   },
   {

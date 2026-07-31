@@ -1,4 +1,4 @@
-import {signupController,loginController,getProfileController,updateProfileController,resetPasswordController,logoutController,forgetPasswordController} from "./auth.controller.js"
+import {signupController,loginController,getProfileController,updateProfileController,resetPasswordController,logoutController,forgetPasswordController, setStatusAccountByAdminController} from "./auth.controller.js"
 
 import {authentication,authorization} from "../../common/middleware/auth.middleware.js"
 import express from "express"
@@ -13,4 +13,5 @@ userRouter.post("/login",schemaValidate(loginSchema),loginController)
 userRouter.post("/logout",authentication(),authorization(UserRole.USER),logoutController)
 userRouter.get("/profile",authentication(),authorization(UserRole.USER),getProfileController)
 userRouter.put("/update/profile",authentication(),authorization(UserRole.USER),updateProfileController)
+userRouter.patch("/status/account/:userId",authentication(),authorization(UserRole.ADMIN),setStatusAccountByAdminController)
 export default userRouter
