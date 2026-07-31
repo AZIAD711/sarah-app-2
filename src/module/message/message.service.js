@@ -13,7 +13,7 @@ export const sendMessageService = async (data) => {
 }
 // GET MY MESSAGES 
 export const getMyMessagesService = async(reciverId)=>{
-    const messages = await selectOne({
+    const messages = await selectMany({
         databaseType: "mongoDB",
         model: MessageModel,
         whereClause: {
