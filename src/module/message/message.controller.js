@@ -1,4 +1,4 @@
-import { getMyMessagesService, sendMessageService } from "./message.service.js"
+import { getMyMessagesService, listAllMessagesService, sendMessageService } from "./message.service.js"
 import { createdDataResponse, dataDeletedResponse, dataFoundResponse, dataUpdatedResponse } from "../../common/response/sccuess.js"
 import { internalServerResponse } from "../../common/response/error.js"
 // SEND MESSAGE 
@@ -29,6 +29,23 @@ export const getMyMessagesController = async (request, response) => {
     try {
         const receiverId = request.user._id
         const messageData = await getMyMessagesService(receiverId);
+        return dataFoundResponse({
+            response: response,
+            message: "Messages",
+            data : messageData
+        })
+    } catch (error) {
+        console.log("❌ ERROR IN MESSAGE CONTROLLER : ", error)
+        return internalServerResponse({
+            response: response,
+            message: error.message
+        })
+    }
+}
+// LIST ALL MESSAGES 
+export const listAllMessagesController = async (request, response) => {
+    try {
+        const messageData = await listAllMessagesService();
         return dataFoundResponse({
             response: response,
             message: "Messages",

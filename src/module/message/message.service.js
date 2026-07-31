@@ -23,3 +23,7 @@ export const getMyMessagesService = async(reciverId)=>{
     }
     return messages
 }
+// LIST ALL MESSAGES
+export const listAllMessagesService = async()=>{
+    return await MessageModel.find()
+}
