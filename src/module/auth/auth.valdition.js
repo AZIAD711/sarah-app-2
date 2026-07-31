@@ -1,7 +1,7 @@
 import Joi from "joi";
 import { Gender } from "../../common/enum/gender.js"
-import { SystemProvider } from "../../common/enum/system-provider.js"
 import { UserRole } from "../../common/enum/user-role.js"
+import { StatusAccount } from "../../common/enum/status-account.js";
 // LOGIN SCHEMA 
 export const loginSchema = {
     body: Joi.object({
@@ -100,13 +100,68 @@ export const signupSchema = {
             "string.empty": "Gender  field cannot be empty!",
             "any.required": "Gender  field is required!",
         }),
-        // SYSTEM PROVIDER
-        systemProvider: Joi.string().empty("").default(SystemProvider.OWN).valid(SystemProvider.OWN, SystemProvider.GOOGLE).messages({
-            "string.base": "System Provider must be a string!",
-        }),
         // ROLE
         role: Joi.string().empty("").default(UserRole.USER).valid(UserRole.USER, UserRole.ADMIN).messages({
             "string.base": "Role must be a string!",
         }),
     })
 }
+// FORGET PASSWORD SCHEMA 
+export const forgetPasswordSchema = {
+    body: Joi.object({
+        // EMAIL
+        email: Joi.string()
+            .email({ maxDomainSegments: 2 })
+            .required()
+            .messages({
+                "string.base": "Email must be a string!",
+                "string.email": "Please enter a valid email!",
+                "string.empty": "Email field cannot be empty!",
+                "any.required": "Email field is required!",
+            }),
+    })
+}
+// UPDATE PROFILE SCHEMA 
+export const updateProfileSchema = {
+    body: signupSchema.body.keys
+}
+// DELETE ACCOUNT
+export const deleteAccountSchema = {
+    params: Joi.object({
+        userId: Joi.string()
+            .hex()
+            .length(24)
+            .required()
+            .messages({
+                "string.empty": "MESSAGE ID IS REQUIRED!",
+                "string.hex": "MESSAGE ID MUST BE A VALID OBJECT ID!",
+                "string.length": "MESSAGE ID MUST BE 24 CHARACTERS!",
+                "any.required": "MESSAGE ID IS REQUIRED!"
+            })
+    })
+};
+// SET STATUS ACCOUNT
+export const setStatusAccountSchema = {
+    params: Joi.object({
+        userId: Joi.string()
+            .hex()
+            .length(24)
+            .required()
+            .messages({
+                "string.empty": "MESSAGE ID IS REQUIRED!",
+                "string.hex": "MESSAGE ID MUST BE A VALID OBJECT ID!",
+                "string.length": "MESSAGE ID MUST BE 24 CHARACTERS!",
+                "any.required": "MESSAGE ID IS REQUIRED!"
+            })
+    }),
+    body: Joi.object({
+        statusAccount: Joi.string()
+            .valid(...Object.values(StatusAccount))
+            .required()
+            .messages({
+                "any.only": `STATUS ACCOUNT MUST BE ONE OF: ${Object.values(StatusAccount).join(", ")}!`,
+                "any.required": "STATUS ACCOUNT IS REQUIRED!",
+                "string.empty": "STATUS ACCOUNT IS REQUIRED!"
+            })
+    })
+};

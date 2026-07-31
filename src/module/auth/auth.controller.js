@@ -150,3 +150,20 @@ export const setStatusAccountByAdminController = async (request, response) => {
         })
     }
 }
+// DELELTE ACCOUNT 
+export const deleteAccountController = async(request, response) => {
+    try {
+        const userId = request.params.userId;
+        const userData = await deleteAccountService(userId)
+        return dataDeletedResponse({
+            response: response,
+            data: userData,
+            message: "Account "
+        })
+    } catch (error) {
+        return response.status(500).json({
+            message : "Internal Server",
+            error : error.message
+        })
+    }
+}

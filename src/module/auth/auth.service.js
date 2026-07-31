@@ -180,3 +180,7 @@ export const setStatusAccountByAdminService=async(statusAccount,userId)=>{
     });
     return status
 }
+// DELETE ACCOUNT 
+export const deleteAccountService = async(userId)=>{
+    return await UserModel.findByIdAndDelete(userId)
+}
