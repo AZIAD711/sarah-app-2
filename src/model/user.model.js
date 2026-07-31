@@ -2,6 +2,7 @@ import { model, Schema } from "mongoose";
 import { Gender } from "../common/enum/gender.js";
 import { UserRole } from "../common/enum/user-role.js";
 import { SystemProvider } from "../common/enum/system-provider.js";
+import { StatusAccount } from "../common/enum/status-account.js";
 
 const noData = "No data provided!";
 
@@ -99,7 +100,12 @@ const userSchema = new Schema(
       default : SystemProvider.OWN
     },
     // CHANGE CREDINATILS 
-    changeCredintals: Date
+    changeCredintals: Date,
+    // STATUS ACCOUNT 
+    statusAccount : {
+      type : String,
+      enum: Object.values(StatusAccount)
+    }
   },
   {
     strict: true,
