@@ -10,7 +10,7 @@ export const app = () => {
     const whishList = [`http://localhost:${PORT}`, `http://localhost:6000`]
     var corsOptions = {
         origin: function (origin, callback) {
-            if (whishList.indexOf(origin) !== -1 || !origin) {
+            if (whishList.includes(origin)) {
                 callback(null, true)
             }
             else {
@@ -25,6 +25,7 @@ export const app = () => {
     databaseConnection()
     redisConnection()
     const router = express()
+    router.use("/uploads", express.static("uploads"))
     router.use(cor(corsOptions))
     router.use(express.json())
     router.use("/auth", userRouter)

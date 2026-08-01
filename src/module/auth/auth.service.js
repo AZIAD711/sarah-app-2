@@ -16,16 +16,24 @@ export const signupService = async (data) => {
         whereClause: {
             email: data.email
         }
-    })
+    });
+
     if (isExist) {
-        throw new Error("Email Is Already Exist !")
+        throw new Error("Email Is Already Exist!");
     }
+
+    if (data.file) {
+        data.profileImage = data.file.path;
+    }
+
+    delete data.file;
+
     return await addOneRecord({
         databaseType: "mongoDB",
         model: UserModel,
         attributes: data
-    })
-}
+    });
+};
 // LOGIN
 export const loginService = async (email, password) => {
     const user = await selectOne({

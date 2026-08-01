@@ -1,25 +1,31 @@
-import { signupService, loginService, getProfileService, updateProfileService, resetPasswordService,logoutService, forgetPasswordService, setStatusAccountByAdminService } from "./auth.service.js"
+import { signupService, loginService, getProfileService, updateProfileService, resetPasswordService, logoutService, forgetPasswordService, setStatusAccountByAdminService } from "./auth.service.js"
 import { internalServerResponse } from "../../common/response/error.js"
 import { createdDataResponse, dataDeletedResponse, dataFoundResponse, dataUpdatedResponse } from "../../common/response/sccuess.js"
 import Joi from "joi"
 // SIGN UP 
 export const signupController = async (request, response) => {
     try {
-        const data = request.body
-        const userData = await signupService(data)
+        const data = {
+            ...request.body,
+            profileImage: request.file?.path
+        };
+
+        const userData = await signupService(data);
+
         return createdDataResponse({
-            response: response,
+            response,
             data: userData,
             message: "User"
-        })
+        });
     } catch (error) {
-        console.log("❌ ERROR IN SIGN UP CONTROLLER : ", error)
+        console.log("❌ ERROR IN SIGN UP CONTROLLER:", error);
+
         return internalServerResponse({
-            response: response,
+            response,
             message: error.message
-        })
+        });
     }
-}
+};
 // LOGIN 
 export const loginController = async (request, response) => {
     try {
@@ -82,7 +88,7 @@ export const resetPasswordController = async (request, response) => {
         const email = request.body.email;
         const password = request.body.newPassword;
         const otp = request.body.otp
-        const userData = await resetPasswordService(email, password,otp)
+        const userData = await resetPasswordService(email, password, otp)
         return dataUpdatedResponse({
             response: response,
             message: "Password",
@@ -99,7 +105,7 @@ export const resetPasswordController = async (request, response) => {
 // LOGOUT 
 export const logoutController = async (request, response) => {
     try {
-        const userData = await logoutService(request.body,request.user,request.decoded)
+        const userData = await logoutService(request.body, request.user, request.decoded)
         return createdDataResponse({
             response: response,
             data: userData,
@@ -136,7 +142,7 @@ export const setStatusAccountByAdminController = async (request, response) => {
     try {
         const statusAccount = request.body.statusAccount;
         const userId = request.params.userId;
-        const userData = await setStatusAccountByAdminService(statusAccount,userId)
+        const userData = await setStatusAccountByAdminService(statusAccount, userId)
         return dataUpdatedResponse({
             response: response,
             data: userData,
@@ -151,7 +157,7 @@ export const setStatusAccountByAdminController = async (request, response) => {
     }
 }
 // DELELTE ACCOUNT 
-export const deleteAccountController = async(request, response) => {
+export const deleteAccountController = async (request, response) => {
     try {
         const userId = request.params.userId;
         const userData = await deleteAccountService(userId)
@@ -162,8 +168,8 @@ export const deleteAccountController = async(request, response) => {
         })
     } catch (error) {
         return response.status(500).json({
-            message : "Internal Server",
-            error : error.message
+            message: "Internal Server",
+            error: error.message
         })
     }
 }
