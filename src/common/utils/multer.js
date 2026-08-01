@@ -12,7 +12,7 @@ export const localFileStorage = ({
     type =[]
 }) => {
 
-    const uploadPath = path.join("uploads", folder);
+    const uploadPath = path.join("./uploads", folder);
 
     if (!fs.existsSync(uploadPath)) {
         fs.mkdirSync(uploadPath, { recursive: true });

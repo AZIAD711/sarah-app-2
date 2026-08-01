@@ -5,10 +5,9 @@ import express from "express"
 import { UserRole } from "../../common/enum/user-role.js"
 import { deleteAccountSchema, loginSchema ,resetPasswordSchema,signupSchema } from "./auth.valdition.js"
 import { schemaValidate } from "../../common/middleware/valdiate.middelware.js"
-import { validateFiles } from "../../common/utils/multer.js"
 import { localFileStorage,validateFiles } from "../../common/utils/multer.js"
 const userRouter = express.Router()
-userRouter.post("/signup",schemaValidate(signupSchema),localFileStorage(localFileStorage({ folder: "profile-images", type: validateFiles.image })).single("profileImage"),signupController)
+userRouter.post("/signup",schemaValidate(signupSchema),localFileStorage({ folder: "profile-images", type: validateFiles.image }).single("profileImage"),signupController)
 userRouter.post("/reset/password",resetPasswordController)
 userRouter.post("/forget/password",forgetPasswordController)
 userRouter.post("/login",schemaValidate(loginSchema),loginController)
